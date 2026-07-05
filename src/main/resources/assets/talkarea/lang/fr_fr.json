@@ -1,3 +1,3 @@
 {
-  "talkarea.command.info": "TalkArea est un système qui fait que seul les personnes dans un certain rayon autour de vous peuvent vous entendre parler\nVous pouvez l'activer ou le désactiver avec /talkarea toggle <true/false>\nVous pouvez définir la distance avec /talkarea distance <distance>\nVous pouvez activer ou désactiver le mode écoute avec /talkarea listen <true/false>\nLe mode écoute vous empêche d'entendre les gens en dehors de la zone de discussion (doit également avoir talkArea activé)"
+  "lustcraft.command.talkarea.info": "TalkArea is a system that makes only people in a radius around you can hear you talk\nYou can enable or disable it with /talkarea toggle <true/false>\nYou can set the distance with /talkarea distance <distance>\nYou can enable or disable the listen mode with /talkarea listen <true/false>\nListen mode prevent you to hear people out of the talk area (need to also have talkArea enable)"
 }
