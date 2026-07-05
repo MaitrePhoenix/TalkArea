@@ -17,11 +17,12 @@ public class TalkAreaCommands {
                     command.getSource().sendSuccess(() -> Component.literal("/talkarea listen <true/false>"), false);
                     return 1;
                 })
-                .then(Commands.literal("info"))
+                .then(Commands.literal("info")
                         .executes(command -> {
                             command.getSource().sendSuccess(() -> Component.translatable("lustcraft.command.talkarea.info"), false);
                             return 1;
                         })
+                )
         );
     }
 }
