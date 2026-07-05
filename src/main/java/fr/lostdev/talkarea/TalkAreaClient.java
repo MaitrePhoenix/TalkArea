@@ -1,6 +1,5 @@
 package fr.lostdev.talkarea;
 
-import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -24,8 +23,5 @@ public class TalkAreaClient {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        // Some client setup code
-        TalkArea.LOGGER.info("HELLO FROM CLIENT SETUP");
-        TalkArea.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 }
