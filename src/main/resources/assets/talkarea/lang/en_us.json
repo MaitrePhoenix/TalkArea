@@ -1,9 +1,3 @@
 {
-  "talkarea.configuration.title": "TalkArea Configs",
-  "talkarea.configuration.section.talkarea.common.toml": "TalkArea Configs",
-  "talkarea.configuration.section.talkarea.common.toml.title": "TalkArea Configs",
-  "talkarea.configuration.items": "Item List",
-  "talkarea.configuration.logDirtBlock": "Log Dirt Block",
-  "talkarea.configuration.magicNumberIntroduction": "Magic Number Text",
-  "talkarea.configuration.magicNumber": "Magic Number"
+
 }

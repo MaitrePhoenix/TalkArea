@@ -1,7 +1,6 @@
 package fr.lostdev.talkarea;
 
 import fr.lostdev.talkarea.command.TalkAreaCommands;
-import fr.lostdev.talkarea.config.ClientConfig;
 import fr.lostdev.talkarea.data.TalkAreaData;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
