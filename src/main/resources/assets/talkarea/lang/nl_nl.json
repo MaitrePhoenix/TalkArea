@@ -1,3 +1,3 @@
 {
-  "lustcraft.command.talkarea.info": "TalkArea is een systeem wat ervoor zorgt dat alleen mensen in een bepaalde omgeving je kunnen horen\nje kunt het aan en uit zetten met /talkarea toggle <true/false>\nje kunt de omgeving instellen met /talkarea distance <afstand>\nje kunt het horen aan en uit zetten via /talkarea listen <true/false>\nluister modes weerhoud je van het horen van mensen buiten je talkarea (hun moetten talkarea wel aan hebben staan)"
+  "talkarea.command.info": "TalkArea is een systeem wat ervoor zorgt dat alleen mensen in een bepaalde omgeving je kunnen horen\nje kunt het aan en uit zetten met /talkarea toggle <true/false>\nje kunt de omgeving instellen met /talkarea distance <afstand>\nje kunt het horen aan en uit zetten via /talkarea listen <true/false>\nluister modes weerhoud je van het horen van mensen buiten je talkarea (hun moetten talkarea wel aan hebben staan)"
 }
