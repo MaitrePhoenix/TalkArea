@@ -19,7 +19,7 @@ public class TalkAreaData {
     );
 
     public static final Supplier<AttachmentType<Integer>> TALKAREA_DISTANCE = ATTACHMENTS.register(
-            "talkarea_distance", () -> AttachmentType.builder(() -> 0).serialize(Codec.INT).copyOnDeath().build()
+            "talkarea_distance", () -> AttachmentType.builder(() -> 100).serialize(Codec.INT).copyOnDeath().build()
     );
 
     public static final Supplier<AttachmentType<Boolean>> TALKAREA_LISTEN_TOGGLE = ATTACHMENTS.register(

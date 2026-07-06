@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import fr.lostdev.talkarea.data.TalkAreaData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -33,11 +34,11 @@ public class TalkAreaCommands {
                             boolean listenToggle = player.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE);
 
                             if (toggle) {
-                                context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance), false);
-                                context.getSource().sendSuccess(listenToggle ? () -> Component.translatable("talkarea.command.listen_enable") : () -> Component.translatable("talkarea.command.listen_disable"), false);
+                                context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance).withStyle(ChatFormatting.GREEN), false);
+                                context.getSource().sendSuccess(listenToggle ? () -> Component.translatable("talkarea.command.listen_enable").withStyle(ChatFormatting.GREEN) : () -> Component.translatable("talkarea.command.listen_disable").withStyle(ChatFormatting.RED), false);
                             }
                             else {
-                                context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.disable"), false);
+                                context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.disable").withStyle(ChatFormatting.RED), false);
                             }
 
                             return 1;
@@ -103,11 +104,11 @@ public class TalkAreaCommands {
         Player player = source.getPlayerOrException();
         player.setData(TalkAreaData.TALKAREA_TOGGLE, toggle);
         if (toggle) {
-            source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)).withStyle(ChatFormatting.GREEN), false);
         } else {
-            source.sendSuccess(() -> Component.translatable("talkarea.command.disable"), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.disable").withStyle(ChatFormatting.RED), false);
             player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, false);
-            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable"), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable").withStyle(ChatFormatting.RED), false);
 
         }
     }
@@ -119,7 +120,7 @@ public class TalkAreaCommands {
      */
     private static void setTalkAreaDistance(CommandSourceStack source, int distance) throws CommandSyntaxException {
         source.getPlayerOrException().setData(TalkAreaData.TALKAREA_DISTANCE, distance);
-        source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance), false);
+        source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance).withStyle(ChatFormatting.GREEN), false);
     }
 
     /**
@@ -132,11 +133,11 @@ public class TalkAreaCommands {
         player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, toggle);
         if (toggle){
             player.setData(TalkAreaData.TALKAREA_TOGGLE, true);
-            source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)), false);
-            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_enable"), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)).withStyle(ChatFormatting.GREEN), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_enable").withStyle(ChatFormatting.GREEN), false);
         }
         else {
-            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable"), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable").withStyle(ChatFormatting.RED), false);
         }
     }
 }
