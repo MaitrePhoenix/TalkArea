@@ -1,3 +1,7 @@
 {
-  "talkarea.command.info": "Die TalkArea Funktion sorgt dafür, dass dich nur Personen in einem bestimmten Bereich hören können.\nZum Aktivieren oder Deaktivieren nutze /talkarea toggle <true/false>\nZum einstellen der Distanz nutze /talkarea distance <distanz>\nDer Zuhörer Modus kann mit /talkarea listen <true/false> aktiviert oder deaktiviert werden\nDer Zuhörer Modus verhindert, dass du Personen außerhalb deines Sprechbereichs hörst (talkarea muss ebenfalls aktiviert sein)"
+  "talkarea.command.info": "Die TalkArea Funktion sorgt dafür, dass dich nur Personen in einem bestimmten Bereich hören können.\nZum Aktivieren oder Deaktivieren nutze /talkarea toggle <true/false>\nZum einstellen der Distanz nutze /talkarea distance <distanz>\nDer Zuhörer Modus kann mit /talkarea listen <true/false> aktiviert oder deaktiviert werden\nDer Zuhörer Modus verhindert, dass du Personen außerhalb deines Sprechbereichs hörst (talkarea muss ebenfalls aktiviert sein)",
+  "talkarea.command.enable_distance": "TalkArea enabled, distance: %s blocks",
+  "talkarea.command.disable": "TalkArea disabled",
+  "talkarea.command.listen_enable": "TalkArea listen enabled",
+  "talkarea.command.listen_disable": "TalkArea listen disabled"
 }
