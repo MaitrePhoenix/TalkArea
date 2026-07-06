@@ -1,5 +1,5 @@
 {
-  "talkarea.command.info": "TalkArea es un sistema que permite que solo las personas dentro de un cierto radio a tu alrededor puedan escucharte hablar\nPuedes activarlo o desactivarlo con /talkarea toggle <true/false>\nPuedes establecer la distancia con /talkarea distance <distancia>\nPuedes activarlo o desactivarlo el modo de escucha con /talkarea listen <true/false>\nEl modo de escucha te impide escuchar a las personas fuera del área de conversación (también necesitas tener habilitada el área de conversación)",
+  "talkarea.command.info": "TalkArea es un sistema que permite que solo las personas dentro de un cierto radio a tu alrededor puedan escucharte hablar\nPuedes activarlo o desactivarlo con /talkarea toggle <true/false>\nPuedes establecer la distancia (en metros) con /talkarea distance <distancia>\nPuedes activarlo o desactivarlo el modo de escucha con /talkarea listen <true/false>\nEl modo de escucha te impide escuchar a las personas fuera del área de conversación (también necesitas tener habilitada el área de conversación)",
   "talkarea.command.enable_distance": "TalkArea enabled, distance: %s blocks",
   "talkarea.command.disable": "TalkArea disabled",
   "talkarea.command.listen_enable": "TalkArea listen enabled",
