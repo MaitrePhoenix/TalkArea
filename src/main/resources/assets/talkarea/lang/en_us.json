@@ -1,3 +1,7 @@
 {
-  "talkarea.command.info": "TalkArea is a system that makes only people in a radius around you can hear you talk\nYou can enable or disable it with /talkarea toggle <true/false>\nYou can set the distance with /talkarea distance <distance>\nYou can enable or disable the listen mode with /talkarea listen <true/false>\nListen mode prevent you to hear people out of the talk area (need to also have talkArea enable)"
+  "talkarea.command.info": "TalkArea is a system that makes only people in a radius around you can hear you talk\nYou can enable or disable it with /talkarea toggle <true/false>\nYou can set the distance (in meters) with /talkarea distance <distance>\nYou can enable or disable the listen mode with /talkarea listen <true/false>\nListen mode prevent you to hear people out of the talk area (need to also have talkArea enable)",
+  "talkarea.command.enable_distance": "TalkArea enabled, distance: %s blocks",
+  "talkarea.command.disable": "TalkArea disabled",
+  "talkarea.command.listen_enable": "TalkArea listen enabled",
+  "talkarea.command.listen_disable": "TalkArea listen disabled"
 }
