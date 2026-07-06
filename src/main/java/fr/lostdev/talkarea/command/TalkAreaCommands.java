@@ -1,51 +1,142 @@
 package fr.lostdev.talkarea.command;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import fr.lostdev.talkarea.data.TalkAreaData;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 
 
 public class TalkAreaCommands {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("talkarea")
-                .executes(command -> {
-                    command.getSource().sendSuccess(() -> Component.literal("/talkarea info"), false);
-                    command.getSource().sendSuccess(() -> Component.literal("/talkarea toggle <true/false>"), false);
-                    command.getSource().sendSuccess(() -> Component.literal("/talkarea distance <distance>"), false);
-                    command.getSource().sendSuccess(() -> Component.literal("/talkarea listen <true/false>"), false);
+                .executes(context -> {
+                    context.getSource().sendSuccess(() -> Component.literal("/talkarea info"), false);
+                    context.getSource().sendSuccess(() -> Component.literal("/talkarea toggle <true/false>"), false);
+                    context.getSource().sendSuccess(() -> Component.literal("/talkarea distance <distance>"), false);
+                    context.getSource().sendSuccess(() -> Component.literal("/talkarea listen <true/false>"), false);
                     return 1;
                 })
 
                 .then(Commands.literal("info")
                         .executes(context -> {
-                            context.getSource().sendSuccess(() -> Component.translatable("lustcraft.command.talkarea.info"), false);
+                            context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.info"), false);
+
+                            Player player = context.getSource().getPlayerOrException();
+                            boolean toggle = player.getData(TalkAreaData.TALKAREA_TOGGLE);
+                            int distance = player.getData(TalkAreaData.TALKAREA_DISTANCE);
+                            boolean listenToggle = player.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE);
+
+                            if (toggle) {
+                                context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance), false);
+                                context.getSource().sendSuccess(listenToggle ? () -> Component.translatable("talkarea.command.listen_enable") : () -> Component.translatable("talkarea.command.listen_disable"), false);
+                            }
+                            else {
+                                context.getSource().sendSuccess(() -> Component.translatable("talkarea.command.disable"), false);
+                            }
+
                             return 1;
                         })
+                )
 
-                        .then(Commands.literal("toggle")
+                .then(Commands.literal("toggle")
+                        .executes(context -> {
+                                CommandSourceStack source = context.getSource();
+                                boolean toggle = source.getPlayerOrException().getData(TalkAreaData.TALKAREA_TOGGLE);
+                                toggleTalkArea(source, !toggle);
+                                return 1;
+                        })
+
+                        .then(Commands.argument("toggle", BoolArgumentType.bool())
                                 .executes(context -> {
-                                    if (context.getSource().isPlayer()) {
-                                        boolean toggle = context.getSource().getPlayerOrException().getData(TalkAreaData.TALKAREA_TOGGLE);
-                                        toggleTalkArea(!toggle);
-                                        return 1;
-                                    } else {
-                                        context.getSource().sendFailure(Component.translatable("lustcraft.command.talkarea.toggle.not_player"));
-                                        return 0;
-                                    }
+                                    CommandSourceStack source = context.getSource();
+                                    boolean toggle = context.getArgument("toggle", Boolean.class);
+                                    toggleTalkArea(source, toggle);
+                                    return 1;
                                 })
                         )
                 )
+
+                .then(Commands.literal("distance")
+                        .then(Commands.argument("distance", IntegerArgumentType.integer())
+                                .executes(context -> {
+                                    CommandSourceStack source = context.getSource();
+                                    int distance = context.getArgument("distance", Integer.class);
+                                    setTalkAreaDistance(source, distance);
+                                    return 1;
+                                })
+                        )
+                )
+
+                .then(Commands.literal("listen")
+                        .executes(context -> {
+                            CommandSourceStack source = context.getSource();
+                            boolean toggle = source.getPlayerOrException().getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE);
+                            toggleTalkAreaListen(source, !toggle);
+                            return 1;
+                        })
+
+                        .then(Commands.argument("toggle", BoolArgumentType.bool())
+                                .executes(context -> {
+                                    CommandSourceStack source = context.getSource();
+                                    boolean toggle = context.getArgument("toggle", Boolean.class);
+                                    toggleTalkAreaListen(source, toggle);
+                                    return 1;
+                                })
+                        )
+                )
+
         );
     }
 
     /**
-     * Toggle the talkArea on or off.
+     * Toggle the talkarea
+     * @param source the player whose value we are changing
      * @param toggle if we enable or disables the talkArea
      */
-    private static void toggleTalkArea(boolean toggle) {
+    private static void toggleTalkArea(CommandSourceStack source, boolean toggle) throws CommandSyntaxException {
+        Player player = source.getPlayerOrException();
+        player.setData(TalkAreaData.TALKAREA_TOGGLE, toggle);
+        if (toggle) {
+            source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)), false);
+        } else {
+            source.sendSuccess(() -> Component.translatable("talkarea.command.disable"), false);
+            player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable"), false);
 
+        }
+    }
+
+    /**
+     * Set the talkarea distance.
+     * @param source the player whose value we are changing
+     * @param distance distance of the talkarea
+     */
+    private static void setTalkAreaDistance(CommandSourceStack source, int distance) throws CommandSyntaxException {
+        source.getPlayerOrException().setData(TalkAreaData.TALKAREA_DISTANCE, distance);
+        source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance), false);
+    }
+
+    /**
+     * Toggle the talkarea listen
+     * @param source the player whose value we are changing
+     * @param toggle if we enable or disables the talkArea listen
+     */
+    private static void toggleTalkAreaListen(CommandSourceStack source, boolean toggle) throws CommandSyntaxException {
+        Player player = source.getPlayerOrException();
+        player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, toggle);
+        if (toggle){
+            player.setData(TalkAreaData.TALKAREA_TOGGLE, true);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)), false);
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_enable"), false);
+        }
+        else {
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable"), false);
+        }
     }
 }

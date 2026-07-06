@@ -1,7 +1,6 @@
 package fr.lostdev.talkarea.data;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -9,6 +8,9 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.function.Supplier;
 
+/**
+ * Is used to stock data on the player about talkarea
+ */
 public class TalkAreaData {
     private static final DeferredRegister<AttachmentType<?>> ATTACHMENTS = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, "talkarea");
 
