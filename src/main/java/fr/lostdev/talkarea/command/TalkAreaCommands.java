@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 
@@ -64,7 +65,7 @@ public class TalkAreaCommands {
                 )
 
                 .then(Commands.literal("distance")
-                        .then(Commands.argument("distance", IntegerArgumentType.integer())
+                        .then(Commands.argument("distance", IntegerArgumentType.integer(0))
                                 .executes(context -> {
                                     CommandSourceStack source = context.getSource();
                                     int distance = context.getArgument("distance", Integer.class);
@@ -101,16 +102,19 @@ public class TalkAreaCommands {
      * @param toggle if we enable or disables the talkArea
      */
     private static void toggleTalkArea(CommandSourceStack source, boolean toggle) throws CommandSyntaxException {
-        Player player = source.getPlayerOrException();
+        ServerPlayer player = source.getPlayerOrException();
         player.setData(TalkAreaData.TALKAREA_TOGGLE, toggle);
         if (toggle) {
             source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", player.getData(TalkAreaData.TALKAREA_DISTANCE)).withStyle(ChatFormatting.GREEN), false);
         } else {
             source.sendSuccess(() -> Component.translatable("talkarea.command.disable").withStyle(ChatFormatting.RED), false);
-            player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, false);
-            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable").withStyle(ChatFormatting.RED), false);
-
+            if (player.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE)) {
+                player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, false);
+                source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable").withStyle(ChatFormatting.RED), false);
+            }
         }
+
+        TalkAreaData.synchronizeDataWithClient(player);
     }
 
     /**
@@ -119,8 +123,12 @@ public class TalkAreaCommands {
      * @param distance distance of the talkarea
      */
     private static void setTalkAreaDistance(CommandSourceStack source, int distance) throws CommandSyntaxException {
-        source.getPlayerOrException().setData(TalkAreaData.TALKAREA_DISTANCE, distance);
+        ServerPlayer player = source.getPlayerOrException();
+        player.setData(TalkAreaData.TALKAREA_DISTANCE, distance);
+        player.setData(TalkAreaData.TALKAREA_TOGGLE, true);
         source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance).withStyle(ChatFormatting.GREEN), false);
+
+        TalkAreaData.synchronizeDataWithClient(player);
     }
 
     /**
@@ -129,7 +137,7 @@ public class TalkAreaCommands {
      * @param toggle if we enable or disables the talkArea listen
      */
     private static void toggleTalkAreaListen(CommandSourceStack source, boolean toggle) throws CommandSyntaxException {
-        Player player = source.getPlayerOrException();
+        ServerPlayer player = source.getPlayerOrException();
         player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, toggle);
         if (toggle){
             player.setData(TalkAreaData.TALKAREA_TOGGLE, true);
@@ -139,5 +147,7 @@ public class TalkAreaCommands {
         else {
             source.sendSuccess(() -> Component.translatable("talkarea.command.listen_disable").withStyle(ChatFormatting.RED), false);
         }
+
+        TalkAreaData.synchronizeDataWithClient(player);
     }
 }

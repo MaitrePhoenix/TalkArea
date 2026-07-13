@@ -1,0 +1,15 @@
+{
+  "providers": [
+    {
+      "type": "reference",
+      "id": "minecraft:default"
+    },
+    {
+      "type": "bitmap",
+      "file": "talkarea:font/talkarea_icone.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uF001"]
+    }
+  ]
+}

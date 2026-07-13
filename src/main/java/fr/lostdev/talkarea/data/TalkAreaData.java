@@ -1,10 +1,16 @@
 package fr.lostdev.talkarea.data;
 
 import com.mojang.serialization.Codec;
+import fr.lostdev.talkarea.network.NetworkManager;
+import fr.lostdev.talkarea.network.fromServer.TalkAreaDataChangedMessage;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.function.Supplier;
 
@@ -26,7 +32,18 @@ public class TalkAreaData {
             "talkarea_listen_toggle", () -> AttachmentType.builder(() -> false).serialize(Codec.BOOL).copyOnDeath().build()
     );
 
+
     public static void init(IEventBus modEventBus) {
         ATTACHMENTS.register(modEventBus);
+    }
+
+
+
+    public static void synchronizeDataWithClient(ServerPlayer player){
+        PacketDistributor.sendToPlayer(player, new TalkAreaDataChangedMessage(
+                player.getData(TALKAREA_TOGGLE.get()),
+                player.getData(TALKAREA_DISTANCE.get()),
+                player.getData(TALKAREA_LISTEN_TOGGLE.get())
+        ));
     }
 }
