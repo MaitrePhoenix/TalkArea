@@ -4,6 +4,7 @@ import fr.lostdev.talkarea.ChatTypeList;
 import fr.lostdev.talkarea.FontList;
 import fr.lostdev.talkarea.TalkArea;
 import fr.lostdev.talkarea.data.TalkAreaData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
@@ -20,15 +21,16 @@ public class ClientEvent {
     @SubscribeEvent
     public static void onMessageReceived(ClientChatReceivedEvent event){
         UUID senderUUID = event.getSender();
+        assert Minecraft.getInstance().level != null;
 
+        Player sender = Minecraft.getInstance().level.getPlayerByUUID(senderUUID);
         Player receiver = Minecraft.getInstance().player;
-        if (receiver != null && receiver.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE)) {
-            assert Minecraft.getInstance().level != null;
-            Player sender = Minecraft.getInstance().level.getPlayerByUUID(senderUUID);
 
-            if (sender == null){
-                return;
-            }
+        if (sender == null || receiver == null){
+            return;
+        }
+
+        if (receiver.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE)) {
 
             int distance = receiver.getData(TalkAreaData.TALKAREA_DISTANCE);
             double distanceSquared = distance * distance;
@@ -38,8 +40,8 @@ public class ClientEvent {
             }
         }
 
-        if (event.getBoundChatType() != null && event.getBoundChatType().chatType().is(ChatTypeList.TALKAREA_CHAT_TYPE)) {
-            Component tooltipText = Component.literal("test");
+        if (receiver.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE) || (event.getBoundChatType() != null && event.getBoundChatType().chatType().is(ChatTypeList.TALKAREA_CHAT_TYPE))) {
+            Component tooltipText = Component.translatable("talkarea.chat.tooltip.talkarea", sender.getDisplayName(), sender.distanceTo(receiver)).withStyle(ChatFormatting.GRAY);
             Style iconStyle = Style.EMPTY.withFont(FontList.FONT_ICONS).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltipText));
 
             event.setMessage(event.getMessage().copy().withStyle(iconStyle));

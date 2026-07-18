@@ -1,10 +1,10 @@
 {
   "chat": {
-    "translation_key": "\uF001 <%s> %s",
+    "translation_key": "\uF351 <%s> %s",
     "parameters": ["sender", "content"]
   },
   "narration": {
-    "translation_key": "%s dit %s",
+    "translation_key": "%s say %s",
     "parameters": ["sender", "content"]
   }
 }

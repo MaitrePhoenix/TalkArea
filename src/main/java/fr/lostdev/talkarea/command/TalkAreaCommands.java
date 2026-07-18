@@ -127,6 +127,9 @@ public class TalkAreaCommands {
         player.setData(TalkAreaData.TALKAREA_DISTANCE, distance);
         player.setData(TalkAreaData.TALKAREA_TOGGLE, true);
         source.sendSuccess(() -> Component.translatable("talkarea.command.enable_distance", distance).withStyle(ChatFormatting.GREEN), false);
+        if (player.getData(TalkAreaData.TALKAREA_LISTEN_TOGGLE)) {
+            source.sendSuccess(() -> Component.translatable("talkarea.command.listen_enable").withStyle(ChatFormatting.GREEN), false);
+        }
 
         TalkAreaData.synchronizeDataWithClient(player);
     }
