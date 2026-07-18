@@ -3,5 +3,6 @@
   "talkarea.command.enable_distance": "TalkArea aan, omgeving:%s blocken",
   "talkarea.command.disable": "TalkArea uit",
   "talkarea.command.listen_enable": "TalkArea luisteren aan",
-  "talkarea.command.listen_disable": "TalkArea luisteren uit"
+  "talkarea.command.listen_disable": "TalkArea luisteren uit",
+  "talkarea.chat.tooltip.talkarea": "Message received from %s via TalkArea, distance: %s blocks"
 }
