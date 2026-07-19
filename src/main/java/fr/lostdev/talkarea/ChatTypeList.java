@@ -11,4 +11,9 @@ public class ChatTypeList {
             Registries.CHAT_TYPE,
             ResourceLocation.fromNamespaceAndPath(TalkArea.MODID, "talkarea_chat_type")
     );
+
+    public static ResourceKey<ChatType> TALKAREA_EMOTE_CHAT_TYPE = ResourceKey.create(
+            Registries.CHAT_TYPE,
+            ResourceLocation.fromNamespaceAndPath(TalkArea.MODID, "talkarea_emote_chat_type")
+    );
 }
