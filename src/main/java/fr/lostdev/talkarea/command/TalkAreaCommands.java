@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import fr.lostdev.talkarea.config.ServerConfig;
 import fr.lostdev.talkarea.data.TalkAreaData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -102,6 +103,11 @@ public class TalkAreaCommands {
      * @param toggle if we enable or disables the talkArea
      */
     private static void toggleTalkArea(CommandSourceStack source, boolean toggle) throws CommandSyntaxException {
+        if (ServerConfig.INSTANCE.FORCE_TALKAREA_ON_SERVER.get()){
+            source.sendFailure(Component.translatable("talkarea.command.toggle_forced").withStyle(ChatFormatting.RED));
+            return;
+        }
+
         ServerPlayer player = source.getPlayerOrException();
         player.setData(TalkAreaData.TALKAREA_TOGGLE, toggle);
         if (toggle) {
@@ -123,6 +129,11 @@ public class TalkAreaCommands {
      * @param distance distance of the talkarea
      */
     private static void setTalkAreaDistance(CommandSourceStack source, int distance) throws CommandSyntaxException {
+        if (ServerConfig.INSTANCE.FORCE_TALKAREA_ON_SERVER.get()){
+            source.sendFailure(Component.translatable("talkarea.command.toggle_forced").withStyle(ChatFormatting.RED));
+            return;
+        }
+
         ServerPlayer player = source.getPlayerOrException();
         player.setData(TalkAreaData.TALKAREA_DISTANCE, distance);
         player.setData(TalkAreaData.TALKAREA_TOGGLE, true);
@@ -140,6 +151,11 @@ public class TalkAreaCommands {
      * @param toggle if we enable or disables the talkArea listen
      */
     private static void toggleTalkAreaListen(CommandSourceStack source, boolean toggle) throws CommandSyntaxException {
+        if (ServerConfig.INSTANCE.FORCE_TALKAREA_ON_SERVER.get()){
+            source.sendFailure(Component.translatable("talkarea.command.toggle_forced").withStyle(ChatFormatting.RED));
+            return;
+        }
+
         ServerPlayer player = source.getPlayerOrException();
         player.setData(TalkAreaData.TALKAREA_LISTEN_TOGGLE, toggle);
         if (toggle){

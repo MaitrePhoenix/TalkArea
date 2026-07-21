@@ -1,16 +1,13 @@
 package fr.lostdev.talkarea.data;
 
 import com.mojang.serialization.Codec;
-import fr.lostdev.talkarea.network.NetworkManager;
 import fr.lostdev.talkarea.network.fromServer.TalkAreaDataChangedMessage;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.function.Supplier;
 
@@ -38,7 +35,10 @@ public class TalkAreaData {
     }
 
 
-
+    /**
+     * Synchronize the talkarea data with the client (his own data)
+     * @param player the player to synchronize the data with
+     */
     public static void synchronizeDataWithClient(ServerPlayer player){
         PacketDistributor.sendToPlayer(player, new TalkAreaDataChangedMessage(
                 player.getData(TALKAREA_TOGGLE.get()),
