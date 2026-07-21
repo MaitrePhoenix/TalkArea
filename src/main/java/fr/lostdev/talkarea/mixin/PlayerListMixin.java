@@ -1,6 +1,7 @@
 package fr.lostdev.talkarea.mixin;
 
 import fr.lostdev.talkarea.ChatTypeList;
+import fr.lostdev.talkarea.TalkArea;
 import fr.lostdev.talkarea.data.TalkAreaData;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
@@ -31,6 +32,8 @@ public abstract class PlayerListMixin {
         if (sender.getData(TalkAreaData.TALKAREA_TOGGLE) && (boundChatType.chatType().is(ChatType.CHAT) || boundChatType.chatType().is(ChatType.EMOTE_COMMAND))) {
 
             ci.cancel();
+            TalkArea.LOGGER.info("{}", boundChatType.decorate(message.decoratedContent()).getString());
+
             for (ServerPlayer receiver : sender.serverLevel().getServer().getPlayerList().getPlayers()) {
                 int distance = sender.getData(TalkAreaData.TALKAREA_DISTANCE);
                 double distanceSquared = distance * distance;
