@@ -4,5 +4,6 @@
   "talkarea.command.disable": "TalkArea uit",
   "talkarea.command.listen_enable": "TalkArea luisteren aan",
   "talkarea.command.listen_disable": "TalkArea luisteren uit",
-  "talkarea.chat.tooltip.talkarea": "Message received from %s via TalkArea, distance: %s blocks"
+  "talkarea.chat.tooltip.talkarea": "Message received from %s via TalkArea, distance: %s blocks",
+  "talkarea.command.toggle_forced": "The talkarea is forced on by the server, you cannot change it using commands."
 }
